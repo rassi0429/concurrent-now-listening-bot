@@ -1,4 +1,6 @@
 # concurrent-now-listening-bot
+![CI Badge](https://github.com/rassi0429/concurrent-now-listening-bot/actions/workflows/build.yml/badge.svg)
+![License MIT](https://img.shields.io/github/license/rassi0429/concurrent-now-listening-bot)
 
 LastFMのNow ListeningをConcurrentに投稿するBotです。
 
