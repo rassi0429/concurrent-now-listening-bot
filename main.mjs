@@ -48,7 +48,7 @@ let lastTrack = null;
 const main = async () => {
     const track = await getRecentTrack();
 
-    if ((track['@attr'] && track.name !== lastTrack.name)) {
+    if ((track['@attr'] && track.name !== lastTrack?.name)) {
         if (track['@attr']) {
             console.log(`You are now listening to ${track.name} by ${track.artist['#text']}`);
             const messageBody = {
