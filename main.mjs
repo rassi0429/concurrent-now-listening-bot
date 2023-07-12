@@ -29,9 +29,8 @@ const user = await client.readCharacter(userAddress, Schemas.userstreams);
 const homeStream = user.payload.body.homeStream;
 */
 
-let lastTrack = null;
 
-const checkLastFM = async () => {
+const getRecentTrack = async () => {
     const response = await axios.get('http://ws.audioscrobbler.com/2.0/', {
         params: {
             method: 'user.getrecenttracks',
@@ -41,23 +40,25 @@ const checkLastFM = async () => {
         }
     });
 
-    const track = response.data.recenttracks.track[0];
+    return response.data.recenttracks.track[0];
+}
 
-    if (lastTrack === null) {
-        lastTrack = track;
-    } else if (lastTrack['@attr'] && !track['@attr']) {
-        console.log(`You just finished listening to ${lastTrack.name} by ${lastTrack.artist['#text']}`);
-        lastTrack = track;
-    } else if (track['@attr'] && track.name !== lastTrack.name) {
-        console.log(`You are now listening to ${track.name} by ${track.artist['#text']}`);
-        lastTrack = track;
 
-        const messageBody = {
-            body: `I'm listening to ${track.name} by ${track.artist['#text']} \n ![](${track.image[3]['#text']})`,
-        };
-        await client.createMessage(Schemas.simpleNote, messageBody, postStreams);
+let lastTrack = null;
+const main = async () => {
+    const track = await getRecentTrack();
+
+    if ((track['@attr'] && track.name !== lastTrack.name)) {
+        if (track['@attr']) {
+            console.log(`You are now listening to ${track.name} by ${track.artist['#text']}`);
+            const messageBody = {
+                body: `I'm listening to ${track.name} by ${track.artist['#text']} \n ![](${track.image[3]['#text']})`,
+            };
+            await client.createMessage(Schemas.simpleNote, messageBody, postStreams);
+        }
+        lastTrack = track;
     }
 }
 
-setInterval(checkLastFM, 10000);
-checkLastFM()
+setInterval(main, 10000);
+main()
