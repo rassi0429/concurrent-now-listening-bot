@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@concurrent-world/client": "0.2.0",
+    "@concurrent-world/client": "0.2.2",
     "axios": "^1.4.0"
   }
 }

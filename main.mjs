@@ -1,12 +1,3 @@
-global.window = {
-    btoa: function (str) {
-        return Buffer.from(str, 'binary').toString('base64');
-    },
-    atob: function (b64Encoded) {
-        return Buffer.from(b64Encoded, 'base64').toString('binary');
-    }
-};
-
 import {Client, Schemas} from "@concurrent-world/client";
 import axios from "axios";
 
@@ -21,13 +12,7 @@ const postStreams = process.env.CONCURENT_POST_STREAMS.split(',');
 const lastFMUser = process.env.LASTFM_API_USER;
 const lastFMAPIKey = process.env.LASTFM_API_KEY;
 
-
 const client = new Client(userAddress, privateKey, host, clientSig);
-
-/*
-const user = await client.readCharacter(userAddress, Schemas.userstreams);
-const homeStream = user.payload.body.homeStream;
-*/
 
 
 const getRecentTrack = async () => {
